@@ -29,171 +29,113 @@ a{color:var(--ac);text-decoration:none}.tel{font-weight:600;font-size:14px;white
 <h1>전북체육중·고등학교 교직원 비상연락망</h1>
 <div class="s">2026. 10. 06. 현재 · 내선 249-2XXX · 전북 완주군 소양면 원암로 46 (해월리 377-19) · 우편번호 55347 · <span id="cnt"></span></div>
 <a class="sc" id="school" target="_blank" rel="noopener">📍 학교 위치 지도</a>
-<div class="top"><input id="q" placeholder="이름·직책·담당·종목·주소 검색"><select id="city"><option value="">거주지 전체</option></select></div>
+<div class="top" id="lock"><input id="pw" type="password" inputmode="numeric" placeholder="🔒 비밀번호 입력 (전화번호·주소 표시)"><button id="ub" style="padding:10px 16px;border-radius:8px;border:0;background:var(--ac);color:#fff;font-size:15px;cursor:pointer">열기</button><span class="s" id="lm"></span></div>
+<div class="top"><input id="q" placeholder="이름·직책·담당·종목·주소 검색"><select id="city" style="display:none"><option value="">거주지 전체</option></select></div>
 <div class="tabs" id="tabs"></div>
 <div class="g" id="list"></div>
-<p class="s">※ 거주지 주소는 교직원 개인정보입니다. 외부 공유에 주의하세요. 지도 버튼은 네이버/카카오 지도 검색 페이지로 이동합니다. 주소가 등재되지 않은 분은 지도 버튼이 없습니다.</p>
+<p class="s">※ 전화번호·주소는 비밀번호 입력 후 표시되며 개인정보입니다. 외부 공유에 주의하세요. 지도 버튼은 네이버/카카오 지도 검색 페이지로 이동합니다. 주소가 등재되지 않은 분은 지도 버튼이 없습니다.</p>
 </div>
 <script>
-const C=`관리|교장|이서기|010-4033-9130|
-관리|교감|김대식|010-3683-4422|
-관리|교감|박창식|010-3654-9853|
-관리|행정실장|임성택|010-6430-8193|
-고등학교|교무부장|김선미|010-3659-3054|자전거
-고등학교|교무실무사|이서윤|010-8726-9789|교무실무
-고등학교|교육과정부장|김용주|010-4154-3351|사회
-고등학교|생기부.창체|최근영|010-5179-2367|한문
-고등학교|학력신장|송용태|010-7226-0852|수학
-고등학교|직무연수|김철중|010-4782-3710|영어
-고등학교|체육부장|김미숙|010-2077-8260|육상트랙
-고등학교|훈련부장|이조웅|010-7254-7124|태권도
-고등학교|방과후|강재홍|010-8645-2081|조정
-고등학교|훈련관리|박명규|010-9552-8875|복싱
-고등학교|연구부장|박세훈|010-3085-7736|역사
-고등학교|교육정보|김서영|010-2138-0543|정보
-고등학교|진로진학|엄상호|010-4727-9865|과학
-고등학교|교육평가|서유진|010-3627-5876|국어
-고등학교|사감부장(여)|김정자|010-3212-7479|체조
-고등학교|인성인권부장|송기산|010-3679-8811|역도
-고등학교|학생생활지원|박하정|010-4033-0033|사격
-고등학교|학폭안전|하상욱|010-3132-6659|테니스
-고등학교|학생맞춤지원|임하은|010-2970-3705|음악
-고등학교|생활지도|김영애|010-3190-7496|펜싱
-고등학교|사감부장(남)|이순철|010-3653-8887|육상필드
-고등학교||김미경|010-3783-7112|국어
-고등학교||이영숙|010-9688-2749|수학
-고등학교|상담|최윤정|010-5699-4977|상담
-고등학교|보건|김혜정|010-6660-0853|보건
-고등학교|급식|윤현영|010-3650-2342|영양
-중학교|교무부장|임현호|010-3036-0602|레슬링
-중학교|교무실무사|박서현|010-8997-9764|교무실무
-중학교|교무수업|최승희|010-2438-2885|국어
-중학교|수업연구|오은진|010-9150-6252|국어
-중학교|교무학적|홍은하|010-9669-8447|수학
-중학교|교육정보|강천지|010-7553-6447|과학
-중학교|성적관리|정현홍|010-4127-1460|기술가정
-중학교|연구부장|이종훈|010-2933-7243|사회
-중학교|인성인권부장|김용완|010-3781-3941|수영
-중학교|학생안전|이윤|010-5065-2085|영어
-중학교|체육부장|이동진|010-5336-0749|양궁
-중학교|학생생활|이광|010-2827-9844|근대3,4종
-중학교|학생복지|김용우|010-9308-0950|축구
-행정실|주무관|원미옥|010-5541-3046|예산
-행정실|주무관|김슬기|010-8753-7106|교무실운영
-행정실|주무관|김양곤|010-5582-6979|급식,세금
-행정실|주무관|곽은진|010-7191-9283|입찰
-행정실|주무관|이재훈|010-8126-6874|물품,여비
-행정실|주무관|이용만|010-3260-9321|운전
-행정실|주무관|장상진|010-9068-6228|전기
-행정실|주무관|서재범|010-3481-5213|기계
-행정실|주무관|김진구|010-5841-4617|기계
-행정실|주무관|김기성|010-8626-5701|시설관리
-행정실|주무관|이진|010-3659-7633|시설관리
-행정실|사감|최영일|010-8987-8688|남자기숙사
-행정실|사감|박주영|010-9972-5066|여자기숙사
-행정실|경비|박제식|010-3652-0077|
-행정실|경비|유창식|010-8670-2811|
-행정실|청소|차순임|010-7273-1732|
-행정실|청소|박순임|010-6866-0639|
-운동부지도자|트레이너|김형철|010-5137-0697|
-운동부지도자|육상 단거리|최성준|010-9104-8232|
-운동부지도자|육상 중장거리|박한규|010-6641-4977|
-운동부지도자|육상 도약|김대영|010-9661-2522|
-운동부지도자|육상 투척|최종범|010-9302-0014|
-운동부지도자|수영|전성민|010-9644-4738|
-운동부지도자|수영|권한얼|010-2046-2878|
-운동부지도자|체조|김병선|010-8503-9647|
-운동부지도자|역도|이현정|010-4536-2663|
-운동부지도자|사격|이윤희|010-8898-1364|
-운동부지도자|레슬링|정웅규|010-9435-9068|
-운동부지도자|레슬링|박진배|010-4244-6779|
-운동부지도자|양궁|김명수|010-4815-7690|
-운동부지도자|자전거|임미영|010-2105-9026|
-운동부지도자|자전거|김종재|010-6490-2088|
-운동부지도자|복싱|임성인|010-3633-8741|
-운동부지도자|태권도|양선웅|010-9403-1895|
-운동부지도자|펜싱|박종환|010-3020-2131|
-운동부지도자|펜싱|유시국|010-4021-2201|
-운동부지도자|근대4종|허웅|010-6781-0059|
-운동부지도자|근대3종|최승현|010-5223-3236|
-운동부지도자|조정|김영래|010-8589-6262|
-운동부지도자|축구|홍진아|010-8351-1219|
-운동부지도자|축구|김나래|010-4225-0601|
-운동부지도자|축구|정유민|010-9216-3290|
-BTL(한백종합건설)|소장|이진성|010-6207-7312|
-BTL(한백종합건설)||김석규|010-6615-5704|
-BTL(한백종합건설)||신동열|010-4655-9315|
-식생활관|영양실무사|김숙희|010-9870-1210|
-식생활관|조리종사원|장미선|010-5810-9491|
-식생활관|조리종사원|조미화|010-8867-9286|
-식생활관|조리종사원|장옥희|010-6215-5143|
-식생활관|조리종사원|이승현|010-2632-9116|
-식생활관|조리종사원|이정순|010-9093-5472|
-식생활관|조리종사원|박연실|010-3166-0056|
+const C=`관리|교장|이서기||
+관리|교감|김대식||
+관리|교감|박창식||
+관리|행정실장|임성택||
+고등학교|교무부장|김선미||자전거
+고등학교|교무실무사|이서윤||교무실무
+고등학교|교육과정부장|김용주||사회
+고등학교|생기부.창체|최근영||한문
+고등학교|학력신장|송용태||수학
+고등학교|직무연수|김철중||영어
+고등학교|체육부장|김미숙||육상트랙
+고등학교|훈련부장|이조웅||태권도
+고등학교|방과후|강재홍||조정
+고등학교|훈련관리|박명규||복싱
+고등학교|연구부장|박세훈||역사
+고등학교|교육정보|김서영||정보
+고등학교|진로진학|엄상호||과학
+고등학교|교육평가|서유진||국어
+고등학교|사감부장(여)|김정자||체조
+고등학교|인성인권부장|송기산||역도
+고등학교|학생생활지원|박하정||사격
+고등학교|학폭안전|하상욱||테니스
+고등학교|학생맞춤지원|임하은||음악
+고등학교|생활지도|김영애||펜싱
+고등학교|사감부장(남)|이순철||육상필드
+고등학교||김미경||국어
+고등학교||이영숙||수학
+고등학교|상담|최윤정||상담
+고등학교|보건|김혜정||보건
+고등학교|급식|윤현영||영양
+중학교|교무부장|임현호||레슬링
+중학교|교무실무사|박서현||교무실무
+중학교|교무수업|최승희||국어
+중학교|수업연구|오은진||국어
+중학교|교무학적|홍은하||수학
+중학교|교육정보|강천지||과학
+중학교|성적관리|정현홍||기술가정
+중학교|연구부장|이종훈||사회
+중학교|인성인권부장|김용완||수영
+중학교|학생안전|이윤||영어
+중학교|체육부장|이동진||양궁
+중학교|학생생활|이광||근대3,4종
+중학교|학생복지|김용우||축구
+행정실|주무관|원미옥||예산
+행정실|주무관|김슬기||교무실운영
+행정실|주무관|김양곤||급식,세금
+행정실|주무관|곽은진||입찰
+행정실|주무관|이재훈||물품,여비
+행정실|주무관|이용만||운전
+행정실|주무관|장상진||전기
+행정실|주무관|서재범||기계
+행정실|주무관|김진구||기계
+행정실|주무관|김기성||시설관리
+행정실|주무관|이진||시설관리
+행정실|사감|최영일||남자기숙사
+행정실|사감|박주영||여자기숙사
+행정실|경비|박제식||
+행정실|경비|유창식||
+행정실|청소|차순임||
+행정실|청소|박순임||
+운동부지도자|트레이너|김형철||
+운동부지도자|육상 단거리|최성준||
+운동부지도자|육상 중장거리|박한규||
+운동부지도자|육상 도약|김대영||
+운동부지도자|육상 투척|최종범||
+운동부지도자|수영|전성민||
+운동부지도자|수영|권한얼||
+운동부지도자|체조|김병선||
+운동부지도자|역도|이현정||
+운동부지도자|사격|이윤희||
+운동부지도자|레슬링|정웅규||
+운동부지도자|레슬링|박진배||
+운동부지도자|양궁|김명수||
+운동부지도자|자전거|임미영||
+운동부지도자|자전거|김종재||
+운동부지도자|복싱|임성인||
+운동부지도자|태권도|양선웅||
+운동부지도자|펜싱|박종환||
+운동부지도자|펜싱|유시국||
+운동부지도자|근대4종|허웅||
+운동부지도자|근대3종|최승현||
+운동부지도자|조정|김영래||
+운동부지도자|축구|홍진아||
+운동부지도자|축구|김나래||
+운동부지도자|축구|정유민||
+BTL(한백종합건설)|소장|이진성||
+BTL(한백종합건설)||김석규||
+BTL(한백종합건설)||신동열||
+식생활관|영양실무사|김숙희||
+식생활관|조리종사원|장미선||
+식생활관|조리종사원|조미화||
+식생활관|조리종사원|장옥희||
+식생활관|조리종사원|이승현||
+식생활관|조리종사원|이정순||
+식생활관|조리종사원|박연실||
 기타(연락처 미등재)|교원(파견)|양혜진||
 기타(연락처 미등재)|일반직(휴직)|소승희||
 기타(연락처 미등재)|교육공무직|신동업||
 기타(연락처 미등재)|교원|한명선||`;
-const A=`김기성|완주군 상관면 원의암길 30
-김대식|전주시 덕진구 두간6길 9
-백충기|전주시 완산구 여울로 109
-김미숙|익산시 고봉로12길 10
-김정자|전주시 덕진구 견훤로 333
-임성택|진안군 진안읍 원반월길 24-20
-박명규|전주시 완산구 전주천서로 445
-원미옥|전주시 덕진구 동가재미2길 28
-김철중|전주시 덕진구 천마산로 100
-김진구|전주시 덕진구 견훤로 333
-엄상호|전주시 완산구 중인1길 185
-이서기|전주시 덕진구 호성로 136
-서유진|전주시 덕진구 틀못1길 15
-김서영|전주시 덕진구 세병로 74
-박하정|전주시 완산구 따박골로 8
-하상욱|군산시 번영로 159
-송기산|전주시 완산구 효천중앙로 50
-김형철|장수군 장수읍 물뿌랭이길 24-1
-김선미|전주시 완산구 신촌3길 29
-윤현영|전주시 덕진구 중상보로 10
-신동업|군산시 수송남로 31
-이순철|전주시 덕진구 천마산로 33
-최윤정|전주시 덕진구 세병로 21
-양혜진|전주시 완산구 백제대로 13
-이조웅|전주시 완산구 새터로 63
-김병선|전주시 덕진구 두간9길 14
-박세훈|전주시 덕진구 천마산로 113
-허웅|전주시 덕진구 우아10길 25-4
-임미영|전주시 덕진구 틀못3길 16
-곽은진|전주시 덕진구 우아로 50
-서재범|전주시 덕진구 혁신로 727
-임하은|완주군 용진읍 운곡4로 20
-김슬기|완주군 용진읍 완주로 186-9
-장미선|임실군 임실읍 운수로 33-22
-조미화|전주시 완산구 아중로 75-12
-김양곤|전주시 덕진구 호성로 170
-이용만|전주시 덕진구 붓내3길 29
-김대영|익산시 학곤로20길 77
-김명수|전주시 덕진구 태진로 101
-박종환|완주군 용진읍 운곡4로 20
-이현정|김제시 요촌동길 56
-장옥희|전주시 덕진구 견훤로 333
-소승희|전주시 덕진구 만성로 180
-강만수|전주시 덕진구 들사평로 6
-이정순|완주군 동상면 수만길 123-13
-장상진|전주시 완산구 홍산1길 7
-이재훈|전주시 덕진구 기린대로 529
-박연실|완주군 삼례읍 왕궁로 56
-임성인|전주시 완산구 삼천천변3길 20
-김숙희|전주시 덕진구 월방3길 7-3
-이서윤|전주시 완산구 봉곡로 149
-이승현|전주시 덕진구 석소로 55
-최종범|익산시 학곤로20길 77
-유시국|전주시 덕진구 우아로 33
-이윤희|전주시 덕진구 무삼지5길 11-4
-김용주|전주시 덕진구 쪽구름로 53
-정웅규|전주시 덕진구 아중1길 19
-박한규|익산시 무왕로26길 32
-양선웅|군산시 검다메2길 29-5
-권한얼|전주시 완산구 봉곡1길 8-8`;
+const ENC="N+/4Icszq4ziMf0+eW4O/z45mFJll3UQma+scfql+HzelvUI6R9rjRsxYF75Jcx73SB2aN6uzswdjgrc4z5HJLZohn4wskjXbIMOBNhWheHcFL3tO4j57UppVkzvUi0k4VLevE6j7RQ+S4tDdPaGn1u8rEdw8XNBPWG8jepSPRzLswERJZ1ClXbI2IF0IJ6dghOPHsIGsO84dsICu51S4kmLTHkHSxl8hlvqrYGa1Ev1LsfE11DwjHjHisVY0tZmBWvwy0QjNeaaU/iyJOsJgNfHINDjAQuIUMvvsjXd323PBZNv1xT5UzwqacGDr7Q2M9PZ7Xk9HiYuHvkzC17UoQcA3l2j94H7BZgtgbJ3XJmDqWxV3XjBlahhj4NcOvzKHjoDZmGs6+CPagtEluPANJJbJnYx7BUX8b8/yXCDunGewayuIAYA9+EYqVqMn93qqluGuoP1L33x97slZnw5Zykm3a3lw/6qy8R1dyFYbaGRFrdMNXsC/US8RIbmhMaai4GzFM2zmbrk7CONNCPt/54mpDU9FkRJW3ZiwzKoOMvZzcCN7YfLGtEaa38OL+gaov7mF20WSTlULt/NxXXewGwwEFeul6PqLkurqgF5FAUVzrwg5vBjIzse9otJdZOuYKVERGEx20mmSyl1hL/zDCVz1Wlj3PnlhcTsOw80XKrT6UITsH05zmE4DEb6rn66GmYCeSZfXUcWAcG9qYlYCX77iTabD4IglHBmxVoGL7c/Hl3bfplFFsXyq4WP256P/gZB2lg+6+N4f4Jv3qpmQMHdvNNGAILqYtUJfzUs/9itNN4oDCOCjX/Dk9KLjfbpc1vZQz0LNwgkynjvWBCP4wmjvJ4sjQEk/DOr330X/66lzriyOCPaXfF53VlbDPPakkZe24x8Cn3bbIwTxnrZ2FuDJZRqIb35Pe2cw7937iFPSOX68UVuQUifO6jnCfvHT8wmUw1NSnrmNGMlBgS403Y+6Vb2vn31FkcZiTVDeY7lbeEOJ3gXPaheeGci986E5bBN+JGZkAjiB7z8f01CvXo8ONgjaefZUQSLk1z7mErzciOk205q85iIVj9F7/BfuzYu30wyCTPQRD6Uz6EOrreW3QOVIF28itTzLN9KdAb8bU8BN/O7tt/MS+ZqJFkDZ6I4CZyVocIYkHssDMHsgkut6xiu7oNN8zqFnPnsO0OfgjlTzAIYDNG4RZ1FQj3cQHpyMoeU6K+q41/qsjfXWbtj151QRBlFwMBToy9BHt0uF+MijSzDEidrIB/pK0oo+h9fJgHyXibFh0QowgRylCv2VFbnb4ojB6cLQrmpAArTVpX0t8UYAHSkzwYfJoHSxnmEVe2cPsT8jX28eDpMjCCdRMeOzmXIkCw7PTxD1N3BfUcjZ7riFRgEKnXWrQcUBWXfxKxc3VDZpkmnXllFPB/vqvw3vk+ddf4s7MQgNSrE7KFnCV2gJtx6OaYjBwpBdcw6Bll6dZa/UllwABgycLULww1xAWucOmMQ6J/gbnz242lx0IH1IsdSSstNDfEM6rQn6jQ68fVLxzttAdEtrSOyog+2ea3BpD9/c+Tq8fTI7oMac63eDc9JBMBU6P7gHR70wCsOtABFSeLhqoqOhC6FPkBUqVNbKr0oc0X3qoZXV5yRZZ9bESYHLJgCvhAeEqT7Llsezaz2lO5QeT1uZFZzCEea1kBZRKS6h4C077Hi5EEfce16wCT2cFxMmcoAjFIzj04ieMZYZSeltpOPDkhvXwn221I/57XRc1jcnyzZvzAqiiqSjx619WpuNS1eS7KTtFyLKwz662gx5Z3FQSWRmilR5Xf0bJI8m82SxS+hC0hpZ6rUEVYyiCFAbeoYpOpPCVnwy2U8BfkdF5zF5OcjJCgn9k87XHIycQzu2orxqsERlvAr7caOwn1rZ46YUdgQRFY3DkL1mxqmZM748Iid3oSgs3q0QPvTaOuun5VRyXWpYW/MrhcQXAGRcpg4loyOMN6RDE8J6u282JbNUtjiag28yldpNcKrd8Hl98nmMwtGKxlTaShvNxnAgrt6b76sRYnpG4koPjo8qXqpru+HI32YZL/lFP07Zxog2aFkx/gLk0SkuF4yoVxzYjzvrW3lIi4Y2f5HYs2hZSCWoBqphRHLBAiTYqDuJcP6ER3gqBb2CkLI4t95q0TJv8d3Zk8R8uJQB0PAN6io7Yfaf0MLA4Q2rK339EUtgkB59P0mWuzoLMqVfQ1SOgNFB7gq+XVVH6sbRpZid5djGYNV1qSVfdI/u34S/oCFZiaaloH3DVjbMwLIz7cZYIffBM+WHJ/6YvMUWoRjyZU2wHeHaVZqGHZAmwREQHX7i9aKvAWoFF45RCo0pfG6R/XphCCJt6Wrkg2WfH+00s8tnim1QfiMHFJlThLroKAA+MMmZ+/F56zfN7zTvaXM7sa+K3e8/iMzXpe5+QDvoGXZ5KDmDxfIuSeixoCIq7cgfNSWpcTfKFpebXmgCOPlQYO321Mp/YqNuZ7lQDIHb58dpTI97jni+RJ7EpAYMYXPzUvzQndUmZZDYZI3UoVmHa7XOhrE+g9o9llpJ7pm36PH+y7G8vNaDtwVUqP5fXgMWw+oylXq+B7QMRevPrB5NpjcwA5uoFltrU1lhTvd/FAaBGlxWFmf1pFRP17RaRZXEooKFtk7BMe66qTj1AQsUTUBsWEyNLBJouwhT3tqXmhMZ0bqWbqksFpDg3lPyM0yNrNP1YwyVc3rST22NLza6yLgDKfwCpSQ9xtUegn8zPX1pOKXEhwcnqekeOvs+QJeMZgIKEPMQZu90gX/o5NBsyZKnYmaANsAfnmfZUUqCWT0MHLiYJWM8dxD04fv60zRv/P3EFsL0GpV+CxGpdULp4wUCHN6yyeYVALLak0aMwVWFMoQtzrd9/mndcAXY7ux1l47b+AisyAoZq6033YRkT1k2nAQNAx+fr0QXSp3wjNW1PhHfybh6FDcGEEWFOWJLHQHjqv4PYn07Ls9CBQRiuvpsqVircrnA9frQy7zUB1n1lpgpr+1uCxD9MKWPj/Od8c726Ab7EXmKUVGWaEYLBsBPJb4k4oIYWjtA9WWe21JIonZZK5yn7CnKsLq52QpeSi3C3PtKttRkfo+xhymy1g1w2/+tirCL8JUKPNtfjEKWDshr3LkWE7OYZBGVFVD5lGJbqV0xDCjx1MX4vtYeKLGZ6wOwe1sMi/IfEC2rHz1zV2NJ1We4R9LfMRmlXqhdbK6VqELokpSWe+blDw++h0eDk1v48KhCDGZC3aupo++HNlwSBiij8DbuCxauKjnqfvXUDqmSnXCs/u+fA8SseqHgTBvu/9qdCmtWnFwy3NYD04cFzxD4xm4cF68cfd9rStxEskTbv6TlHjqX4SrzMbuhcu3kFwuVmP6fr9WtJYDaZadtN3cg1OYLKNyQBKUt90Yq1d+buiWpPtwXjZ7qOoT1KFoQPFJsgSR4HtyJBe6iDeMLl50iTaB5EgOwC5ZDfMsANg0P5o3OdyGvryGMOeYq60JtLa89Qh/BOH8uk2ME9gMPgPAokFHH1heFnA0TsMWqMRAebyjc6uJMjzRmLefl9k1iTuJQavxwN+Ja0q8EPJe9kSTbk8c1svdR86O31OeD1sgQpIgtII7qRYsPNnwjn/X55DAtk0RCiQbw8GE7EWG/eXKt1+y5Na8C9PnROCfu56yD6CskRR5G0rXK9qeV9yaB2KegdhJ08kRWsblCGjioH15wvzPxIbujIzGtXSsi2MU2aa8UKM9evxQDw5G2T/t4poZE5zhtABLT0BZ12R8q1vAyprAtqSwKUTWElIUmHFRQ6uOEONJWP5ypwX6pYTxae8qAC8ga1Vj0XV8kHg6tz5jEHDdsijtgPVV49mf+lddXq0gvKY47t2C5HXqOGbKZNPw6h+XBVCVLu/e04whikvXZsH7GvHfluS0cQJ1gRqc83EcZr53eSo3MygCbA9kmx4io9uvaHrSQ4+Q1LXJl8nmIxY3AcsGjxCDEAUllG4JZYgtAhXnvTPjRt0qq8HrpQQY+6jeaoXk9tg9kegSN4id1JuziSE2LLH5m3zdZ8BVrmgbqPMzeKTUZjsLuKkE5zMr9Us/RAGV0pVCNFIe25mMfk7uR3UzFB+cFBwOxeJSlMjlCr5iL/fEFuFc9200tMymwcTYbO5T6L9Uoq1m5+Br31HWN56+N63aR0MvTGK0JU+Z/CPmxN8oGd+QLrEdWRtbd25ceC3GuB7w1q1COgofz79RrxC3dsgQIQu1G4AQHwW85kVY+v8McbIEl7kw764aCB97dFf4omrvkjHFqnjkSfaralYPr9HdAabUcv3nKVazUP1u9grkLte4XI3vYLu9ArJNYdOa+vQV6cUNXqVHzFY6ayYdBwbjGKQxJpvmbcKpgwAiFK+zeuNAxVcmc/+9eLkYvujpwBOlb/eLLS0/pUTF1PZBWSqpxzTBdBSz0bjRu/UJJfAcM9UQ9OpQZflulv7S3gI20KTbIcyrahUE2jXlr3RspIDrd2Sy80Lt9+ygzvRcu0sVrFoIr6P9HhrTKhpg92WwtzBwthlcPdTmJdNmLV0q4KeaXmodnept8I5QcBqQVVL81bzrjAIbzcSEAJa4l44pstq0/rsVo8dd6fxfdwPgyxWe5P9YkFceNv7Xm+VOCWBy1UiwxSYHMjrPe7yz/rMfEJnNRh5rneQXZTg+kipv3yjNFtJSpuK6BwHWCP10jkJlJ5dle8c9/Sp1DA+txA0TjZmNbfUUPa88v2hB0uURLxs3Nj3INT+u4zxr4bYi4R7eOluf63rRua3IojsPxTsSbQlkBdy0OGEHyucGPaO3qjxOrxMEo7qTDk36ktT/o1Chxz1tXQwO6xrva3Q4X7gexxa/31z55bbNbI1JdZKrpfEcK3lkpQ14BxjgYnTSa6b90wwGm8ABczTE+U7J3LMmPtRHsu8iw69LT/8bXSWH4oD1/KZ3/4N7ERwkO9bpG6JdzH6OUle04Six33ca6dW/DearMjIoGpUfVSlWZ9kqxRwyBXqzNbi+bd6Wj5Ajk1ki7mQLZ2mti5egJxMDfedaUnneZ/UPkD28yUDpIlN5/rixarNU8/o/Kb/IrpLtks9ZWB5yEYYmG+pzsfF8CmTpx/KJMo/PKcBSdxiYew+BzWhvq1CE9MnoX+gUYimfuxCN9oUyDpKvG8P3sLZCX2zZSQwhKIrgjv1tfNL++M3rDcsCfEB+CDgOpcokxraDMjIurKUiSQw7qCGZGWsPDpwyNn2JmuIpSUo1lIdFZEwdqxUJ1PZnYO1vtY09WQzVPfSiHdhP36oVkm27jt5cyTrsWPalwck7D/0W3F2pB9yWfPCxoa493NhQmDZiKL5EZB3EsQsLc9hCWbPP8d+LvHHnlg1fz8yVnHfQ9Qm4u9zityR20oXseTWWZTl4QQI1nKL+PYQIFu6Dr5C/NVR1NENJVroNndtF6Vb5F2FnkQLyO9xYl83YQCWS4yHwJ9FDG0PixCBeBybEwEi1P5T59QMRwFlIpcdZ3eICu49rWbPo1xywqky0hnsq/TrXLzdH/waaC/0Dh+ggCtFbNBKTNqzedozYsRLxSm8OTjDKQzYTG8ovp98Enwvuwjg72A59jiVI9PMlHc5v2u14Aa8b+uUb6cp5BE2EU/khKAoYrjCJoiojUXrheVgK6PXAYLEaPelrPZQoeeFAGVStTh0Eh7AEfUXkXpdDEzpqW7xtNLYs3wm0qOHkU7up9sxlzIkSlB+UlqqpErWUzxSV2dcbglrLUlCHNAzr54z7KZV+nFqfogVYX6dHJQJSHuJayClSlGD9Y6BWgpsBZraLfC0/9gXGQiFWx//Q1n75MsE1rIZ9aeevJrljVcEUlrbDNDlxtRUymzoGBEhwS00C6AbMab48ncoVTNhVULWmahXiBAh8Hl0AEzJw/5Nru9BQnmzRRYZvd1R37UHHuv/ysdVCDo17weclWoW3IJ2aXFyooYkX0maoC19lAOPALEDWjp2zKB3yU2moKEqdg0ihpBoyDGhfvcvpQF9ERKsSAY2doIcno3bUPDMK623JgFtZGaWWuOP1HlwpsTU2WW2e1tKTd8mu31W+ATg/GTQSGXaNzHZoK1e3vDRrFJSoXXYignU9hS1ZHQ+0WOvWeb00oNAiuLfbUu3BiyaTpv/3aF7G1Wcxoe74UpFMwPpUzM4xdrYfWMwLdqevvrlQ33fuT/b6NkTGfi5y+iS18sjf2lh11yerU35LSbt8YQNqSydRQC9bqEGI/SW5ct9RYjNQBlYucWiWl50tDXX1NlZYQFbyVe/v9F4/PgyUSy8UVVDpayy6tJSTiHHSYnCcTSIfRj7cdCVPUHqvQvMNbq7GTzurgGAeIlvYr7EgB/RiR7egf67raxmqbNBr8BuZ+QY3JGlcpELJjBYO47wkXKlVb/8GSqtyyctav4bE6cMaZi1kVFM6mDpNpeA6mVn8gwGbchYrnp1H4hXpwoVfz2UxobtcL5wy6NP3QuhTs1MtxoAh1vWcAAWeI3wkgZJE1wWxyj327rmspX/B36CbLp6O4sfEozDYL1blFReeRTZf4mZrYosbNHzs/trpNjP0j9XfJOHYfiEe6yJINneLCUkRum6zCicK9xZ6KR2A/ICnfRgDzT6LuVCgkMivFkIZM3ukNzl18gI03XIZaUu9cFEnkC6ofSgJ9L+P/GviFgaC/2EJ+Q/tJ+KQ38Ie5zdWY97Le9FVjCSzFsPFEpWc7Uq92SFhuVBZKT4l9Mqsaloyhpcqw25o19mJX6U5aki7T99QOwkloUpbG9l1R/RTDqpBgBOCKjNv074SvOr1bfAQIpznqqh9XBOcqR++9jIwLtBCh1r1wHfnQkBRX/nVKy3mRSgOdwhrLayD2GyvedDbaBM3qWXreDHLHPfaHlzX0k+L2nABwNkLhaB7bhnlpw2cfyXcLNb4d3lFo7M1rEJTFIpA4/1uFEwEkhwwQLU2Nf91wprqUuebYJLIf/o7AveWk/6YVmErZhW6NKgj4KT4nDUnGg8EhstYr8tzt6AzFiMcUEhn4zbCHpGawqu5nlhmRDsD9wNlSLTjmodF/BQfm128CFnK0yXGXL1Ky3Hf21zcNJfPxUIxeSFdoN886j/7kd5rnKiqCFtta8fQgWDpaCR+aD5H3NWa4dkWNRrt9eMtf7VEVqTLqYXXJBaMB29gFN0mfbFqWLaNV19PFAf2WYmxGuE1ue82hX0mCZggprl7aAlMoOB3xc1xmQb5Hxy6YhyjQf5fJgvbUjE+dbVm9lQYDxPTu//yMY5pSTqU+/4UJGimeGw4OMkJ5JrHnmdsRpVq9jmAYBVW3R9ltcYZ6Imls4jSKx8mslPnPUPHWtcfptlJribSJ8KEpJGm8hAF5mhRwIoSlQzMh71YLwGqqiXsyFmTOovDeOAGUf3LHKBA1tDPpjUAytcBy/apz1JECw6zEHjbsTYNa9ykwCx2dKu4GtY2FnfFDNePbTwvTjyVk10Y293k9YW8dDOdF4+nkjV5k2UqfAEKYAYAXaA0UgD00kDWOQhezVyfym0XeQ23zrIp9zDYBs1M/MSpqPNcnlHE/mM91MVzhBrbDWqqYq3tbXS4ml0bwj1guds6DY1uZZxxtDG0Cb2pG+zGravY8vkoTMFRvYW9J1XbzsM11Z7izSW6z08Pj6zhS6Oj2Ixfgus25Y/SjWUATHdc/7J5ROs29ExZQ3qvvmWgtj5dMq6j2sS7x75QVbNCZafJIl1xwPTYASDIb+2/xgDfWQ6IpKJfsVF+g3Bmu6edinJtl2efLe6W2uveWD+8KTp4L1EiZOGPZHWB2kLZLE0nVZpJNQR6MBNPuSmfEltMXZJC3AxIWtBX/zUFI8dtmnX37g==";
 const E=`이서기|201
 박창식|267
 임성택|281
@@ -283,13 +225,23 @@ const F=`대표/FAX|행정실 대표|200|
 운동부|양궁|254|양궁장
 운동부|테니스|255|테니스장`.split("\n").map(l=>l.split("|"));
 const ex={};E.split("\n").forEach(l=>{const[n,e]=l.split("|");ex[n]=e});
-const ad={};A.split("\n").forEach(l=>{const[n,a]=l.split("|");ad[n]=a});
+let ad={},U=false;
 const P=C.split("\n").map(l=>{const[g,r,n,t,d]=l.split("|");const a=ad[n]||"";return{g,r,n,t,d,a,c:a.split(" ")[0],e:ex[n]||""}});
 const S="전북 완주군 소양면 원암로 46";
 document.getElementById("school").href="https://map.naver.com/p/search/"+encodeURIComponent(S);
 const FT="내선(부서·시설)";let G="전체",tabs=["전체",...new Set(P.map(p=>p.g)),FT];
-const cities=[...new Set(P.map(p=>p.c).filter(Boolean))].sort();
-const cs=document.getElementById("city");cities.forEach(c=>cs.add(new Option(c,c)));
+const cs=document.getElementById("city");
+async function dec(pw){const b=Uint8Array.from(atob(ENC),c=>c.charCodeAt(0));
+const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b.slice(0,16),iterations:200000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(16,28)},k,b.slice(28))))}
+async function go(){const m=document.getElementById("lm");m.textContent="";
+try{const d=await dec(document.getElementById("pw").value.trim());ad=d.a;
+P.forEach(p=>{p.t=d.p[p.n]||"";p.a=ad[p.n]||"";p.c=p.a.split(" ")[0]});U=true;
+[...new Set(P.map(p=>p.c).filter(Boolean))].sort().forEach(c=>cs.add(new Option(c,c)));
+cs.style.display="";document.getElementById("lock").style.display="none";draw()}
+catch(e){m.textContent="비밀번호가 맞지 않습니다."}}
+document.getElementById("ub").onclick=go;document.getElementById("pw").onkeydown=e=>{if(e.key==="Enter")go()};
 const tb=document.getElementById("tabs");
 function drawTabs(){tb.innerHTML="";tabs.forEach(t=>{const b=document.createElement("button");b.textContent=t;if(t===G)b.className="on";b.onclick=()=>{G=t;drawTabs();draw()};tb.appendChild(b)})}
 function esc(s){return s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
@@ -301,7 +253,7 @@ document.getElementById("cnt").textContent=L.length+"명 표시 / 전체 "+P.len
 document.getElementById("list").innerHTML=L.map(p=>{
 const full="전북 "+p.a,e=encodeURIComponent(full);
 return `<div class="c"><span class="n">${esc(p.n)}</span><span class="r">${esc([p.g,p.r,p.d].filter(Boolean).join(" · "))}</span>${p.e?`<span class="x">내선 ${esc(p.e)}</span>`:"<span></span>"}
-${p.t?`<a class="tel" href="tel:${p.t.replace(/-/g,"")}">📞 ${p.t}</a>`:`<span class="s">연락처 미등재</span>`}
+${p.t?`<a class="tel" href="tel:${p.t.replace(/-/g,"")}">📞 ${p.t}</a>`:`<span class="s">${U?"연락처 미등재":"🔒"}</span>`}
 ${p.a?`<div class="ad">🏠 ${esc(p.a)} <a target="_blank" rel="noopener" href="https://map.naver.com/p/search/${e}">네이버지도</a><a target="_blank" rel="noopener" href="https://map.kakao.com/?q=${e}">카카오맵</a></div>`:""}</div>`}).join("")||'<p class="s">검색 결과가 없습니다.</p>'}
 document.getElementById("q").oninput=draw;cs.onchange=draw;drawTabs();draw();
 </script></body></html>
